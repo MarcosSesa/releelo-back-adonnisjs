@@ -24,7 +24,7 @@ export default class BooksController {
       query.where('categoriesIds', request.input('category_id'))
     }
     //TODO const filter = request.input('filter', '')
-    const books = await query.paginate(page, rpp)
+    const books = await Book.query().paginate(page, rpp)
     return response.ok(books)
   }
   // Get an specific Book

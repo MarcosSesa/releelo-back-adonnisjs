@@ -19,12 +19,12 @@ export default class BooksController {
   public async getAll({ request, response }: HttpContextContract) {
     const page = request.input('page', 1)
     const rpp = request.input('rpp', 10)
-    const query = Book.query()
+    const query = Book.query().paginate(page, rpp)
     if (request.input('category_id')) {
-      query.where('categoriesIds', request.input('category_id'))
+      query.where('category_id', request.input('category_id'))
     }
     //TODO const filter = request.input('filter', '')
-    const books = await query.paginate(page, rpp)
+    const books = await Book.query().paginate(page, rpp)
     return response.ok(books)
   }
   // Get an specific Book

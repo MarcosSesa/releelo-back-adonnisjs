@@ -6,12 +6,7 @@ import Category from 'App/Models/Category'
 
 export default class CategoriesController {
   public async getAll({ response }: HttpContextContract) {
-    const categories = await Category.query().select('*')
+    const categories = await Category.query()
     response.ok(categories)
-  }
-  public async index({ request, response }: HttpContextContract) {
-    const categoryId = await request.input('id')
-    const category = await Category.query().where('id', categoryId)
-    response.ok(category)
   }
 }

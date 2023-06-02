@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasMany, ManyToMany, column, hasMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, ManyToMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Book from './Book'
 
 export default class Category extends BaseModel {

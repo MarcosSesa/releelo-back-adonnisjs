@@ -12,7 +12,6 @@ export default class extends BaseSchema {
       table.integer('year')
       table.string('category_id').unsigned().references('categories.id').notNullable()
       table.integer('user_id').unsigned().references('users.id').notNullable().onDelete('CASCADE')
-      table.string('category_id').unsigned().references('categories.id').notNullable()
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

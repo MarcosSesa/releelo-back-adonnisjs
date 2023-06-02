@@ -1,16 +1,6 @@
 import { DateTime } from 'luxon'
-import {
-  BaseModel,
-  BelongsTo,
-  HasMany,
-  ManyToMany,
-  belongsTo,
-  column,
-  hasMany,
-  manyToMany,
-} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
-import Category from './Category'
 
 export default class Book extends BaseModel {
   @column({ isPrimary: true })
@@ -31,13 +21,8 @@ export default class Book extends BaseModel {
   @column({ serializeAs: null })
   public userId: number
 
-  @column({ serializeAs: null })
-  public categoryId: number
-
-  @manyToMany(() => Category, {
-    pivotTable: 'categories',
-  })
-  public categories: ManyToMany<typeof Category>
+  @hasMany(() => Book)
+  public books: HasMany<typeof Book>
 
   @belongsTo(() => User)
   public owner: BelongsTo<typeof User>

@@ -10,7 +10,7 @@ export default class CategoriesController {
     response.ok(categories)
   }
   public async index({ request, response }: HttpContextContract) {
-    const categoryId = await request.input('id')
+    const categoryId = await request.param('id')
     const category = await Category.query().where('id', categoryId)
     response.ok(category)
   }
