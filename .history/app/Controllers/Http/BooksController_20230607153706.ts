@@ -13,7 +13,9 @@ export default class BooksController {
     const user = await auth.authenticate()
     const data = await request.validate(CreateBookValidator)
     const categories = await Category.findOrFail(request.input('categories'))
-    const books = await categories.related('books').create({ ...data, userId: user.id })
+
+      .related('books')
+      .create({ ...data, owner: user })
 
     // await book.related('owner').associate(user)
     return response.created(books)

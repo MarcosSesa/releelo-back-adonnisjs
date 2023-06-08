@@ -9,6 +9,6 @@ export default class CreateBookValidator {
     descripcion: schema.string({}, [rules.maxLength(150)]),
     year: schema.number(),
     autor: schema.string({}, [rules.maxLength(50)]),
-    categories: schema.number(),
+    categories: schema.array.schema.string(),
   })
 }

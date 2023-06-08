@@ -16,8 +16,12 @@ export default class CategoriesController {
   }
 
   public async create({ auth, request, response }: HttpContextContract) {
-    await auth.authenticate()
-    const category = Category.create(request.input('categoryName'))
-    response.ok(category)
+    try {
+      await auth.authenticate()
+      const category = Category.create(request.input('categoryName'))
+      response.ok(category)
+    } catch (error) {
+      response.badRequest('Invalid request', error)
+    }
   }
 }

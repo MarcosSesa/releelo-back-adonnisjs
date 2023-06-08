@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class CreateBookValidator {
+export default class EditBookValidator {
   constructor(private ctx: HttpContextContract) {}
 
   public schema = schema.create({
@@ -9,6 +9,5 @@ export default class CreateBookValidator {
     descripcion: schema.string({}, [rules.maxLength(150)]),
     year: schema.number(),
     autor: schema.string({}, [rules.maxLength(50)]),
-    categories: schema.number(),
   })
 }

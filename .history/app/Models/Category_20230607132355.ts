@@ -18,7 +18,7 @@ export default class Category extends BaseModel {
   // Relationships -----------------------------
 
   @manyToMany(() => Book, {
-    pivotTable: 'book_category',
+    pivotTable: 'Books',
   })
   public books: ManyToMany<typeof Book>
 }

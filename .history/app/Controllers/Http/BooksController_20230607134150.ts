@@ -2,7 +2,6 @@
 
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Book from 'App/Models/Book'
-import Category from 'App/Models/Category'
 import CreateBookValidator from 'App/Validators/Book/CreateBookValidator'
 import EditBookValidator from 'App/Validators/Book/EditBookValidator'
 
@@ -12,11 +11,9 @@ export default class BooksController {
   public async create({ request, response, auth }: HttpContextContract) {
     const user = await auth.authenticate()
     const data = await request.validate(CreateBookValidator)
-    const categories = await Category.findOrFail(request.input('categories'))
-    const books = await categories.related('books').create({ ...data, userId: user.id })
-
-    // await book.related('owner').associate(user)
-    return response.created(books)
+    const book = await Book.create(data)
+    await book.related('owner').associate(user)
+    return response.created(book)
   }
   // Get a list of all book
   public async getAll({ request, response }: HttpContextContract) {

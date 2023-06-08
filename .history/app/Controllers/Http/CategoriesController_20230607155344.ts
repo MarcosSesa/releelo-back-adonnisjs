@@ -15,9 +15,10 @@ export default class CategoriesController {
     response.ok(category)
   }
 
-  public async create({ auth, request, response }: HttpContextContract) {
-    await auth.authenticate()
-    const category = Category.create(request.input('categoryName'))
-    response.ok(category)
+  public async create({ request, response }: HttpContextContract) {
+    try {
+      const category = Category.create(request.input('categoryName'))
+      response.ok(category)
+    } catch (error) {}
   }
 }

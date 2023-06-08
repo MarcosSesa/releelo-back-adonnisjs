@@ -34,6 +34,8 @@ export default class Book extends BaseModel {
   @column({ serializeAs: null })
   public categoryId: number
 
+
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -42,11 +44,5 @@ export default class Book extends BaseModel {
 
   // Relationships ---------------------------------------
 
-  @manyToMany(() => Category, {
-    pivotTable: 'book_category',
-  })
-  public categories: ManyToMany<typeof Category>
 
-  @belongsTo(() => User)
-  public owner: BelongsTo<typeof User>
 }

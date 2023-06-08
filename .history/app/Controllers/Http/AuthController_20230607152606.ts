@@ -18,7 +18,6 @@ export default class AuthController {
       return response.ok(token)
     } catch (error) {
       return response.unauthorized('Credenciales incorrectas')
-    }
   }
 
   public async logout({ response, auth }: HttpContextContract) {

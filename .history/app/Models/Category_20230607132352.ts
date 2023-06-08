@@ -9,6 +9,8 @@ export default class Category extends BaseModel {
   @column()
   public categoryName: string
 
+
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -18,7 +20,7 @@ export default class Category extends BaseModel {
   // Relationships -----------------------------
 
   @manyToMany(() => Book, {
-    pivotTable: 'book_category',
+    pivotTable: 'Books',
   })
   public books: ManyToMany<typeof Book>
 }

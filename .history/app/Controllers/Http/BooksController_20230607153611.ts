@@ -12,8 +12,10 @@ export default class BooksController {
   public async create({ request, response, auth }: HttpContextContract) {
     const user = await auth.authenticate()
     const data = await request.validate(CreateBookValidator)
-    const categories = await Category.findOrFail(request.input('categories'))
-    const books = await categories.related('books').create({ ...data, userId: user.id })
+    const books = await request
+      .input('categories')
+      .related('books')
+      .create({ ...data, owner: user })
 
     // await book.related('owner').associate(user)
     return response.created(books)

@@ -12,11 +12,12 @@ export default class BooksController {
   public async create({ request, response, auth }: HttpContextContract) {
     const user = await auth.authenticate()
     const data = await request.validate(CreateBookValidator)
-    const categories = await Category.findOrFail(request.input('categories'))
-    const books = await categories.related('books').create({ ...data, userId: user.id })
-
+    const categories = await request.input('categories')
+    for (let i = 0; i < categories.length; i++) {
+      const book = await categories[i].related('books').create({ ...data, owner: user })
+    }
     // await book.related('owner').associate(user)
-    return response.created(books)
+    return response.created(book)
   }
   // Get a list of all book
   public async getAll({ request, response }: HttpContextContract) {

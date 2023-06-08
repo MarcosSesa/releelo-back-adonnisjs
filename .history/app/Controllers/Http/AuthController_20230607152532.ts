@@ -17,7 +17,9 @@ export default class AuthController {
       const token = await auth.attempt(data.email, data.password)
       return response.ok(token)
     } catch (error) {
-      return response.unauthorized('Credenciales incorrectas')
+      return (
+        response.unauthorized('responses.auth.login.wrong_credentials'), response.redirect().back()
+      )
     }
   }
 
