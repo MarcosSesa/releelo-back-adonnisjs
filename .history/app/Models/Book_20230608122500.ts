@@ -28,24 +28,24 @@ export default class Book extends BaseModel {
   @column()
   public autor: string
 
-  @column({ serializeAs: null })
-  public userId: number
-
-  @column({ serializeAs: null })
-  public categoryId: number
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
+  // FK
+
+  @column({ serializeAs: null })
+  public userId: number
+
+  @column({ serializeAs: null })
+  public categoryId: number
+
   // Relationships ---------------------------------------
 
-  @manyToMany(() => Category, {
-    pivotTable: 'book_category',
-  })
-  public categoriesBook: ManyToMany<typeof Category>
+  @belongsTo(() => Category)
+  public category: BelongsTo<typeof Category>
 
   @belongsTo(() => User)
   public owner: BelongsTo<typeof User>

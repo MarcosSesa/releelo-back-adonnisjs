@@ -15,7 +15,7 @@ export default class CategoriesController {
     const category = await Category.query().where('id', categoryId)
     response.ok(category)
   }
-  //TODO: No funciona, hay que arreglarlo
+
   public async create({ auth, request, response }: HttpContextContract) {
     await auth.authenticate()
     const data = await request.validate(CreateCategoryValidator)

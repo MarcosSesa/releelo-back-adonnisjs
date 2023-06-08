@@ -12,8 +12,8 @@ export default class BooksController {
     const user = await auth.authenticate()
     const data = await request.validate(CreateBookValidator)
     const book = await user.related('books').create(data)
-    // const category = await Category.findByOrFail('id', request.input('category'))
-    // await book.related('categories').attach([category.id])
+    const category = await Category.findByOrFail('id', request.input('category'))
+    await book.related('categories').attach([categories])
     return response.created(book)
     //TODO: Add category asignation to the book
   }

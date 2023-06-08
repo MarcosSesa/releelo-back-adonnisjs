@@ -42,10 +42,8 @@ export default class Book extends BaseModel {
 
   // Relationships ---------------------------------------
 
-  @manyToMany(() => Category, {
-    pivotTable: 'book_category',
-  })
-  public categoriesBook: ManyToMany<typeof Category>
+  @belongsTo(() => Category)
+  public category: BelongsTo<typeof Category>
 
   @belongsTo(() => User)
   public owner: BelongsTo<typeof User>

@@ -9,5 +9,5 @@ Route.group(() => {
 }).prefix('books')
 
 Route.group(() => {
-  Route.get('books', 'BooksController.userBooks')
+  Route.get('books', 'BooksController.')
 }).prefix('user')

@@ -12,24 +12,18 @@ export default class BooksController {
     const user = await auth.authenticate()
     const data = await request.validate(CreateBookValidator)
     const book = await user.related('books').create(data)
-    // const category = await Category.findByOrFail('id', request.input('category'))
-    // await book.related('categories').attach([category.id])
     return response.created(book)
-    //TODO: Add category asignation to the book
-  }
-
-  //Get all related books of a user
-  public async userBooks({ response, auth }: HttpContextContract) {
-    const user = await auth.authenticate()
-    const books = await user.related('books').query()
-    return response.created(books)
   }
   // Get a list of all book
   public async getAll({ request, response }: HttpContextContract) {
-    //TODO: ADD FILTERS by filter, by category
     const page = request.input('page', 1)
     const rpp = request.input('rpp', 10)
-    const books = await Book.query().paginate(page, rpp)
+    const query = Book.query()
+    if (request.input('category_id')) {
+      query.where('categoriesIds', request.input('category_id'))
+    }
+    //TODO const filter = request.input('filter', '')
+    const books = await query.paginate(page, rpp)
     return response.ok(books)
   }
   // Get an specific Book

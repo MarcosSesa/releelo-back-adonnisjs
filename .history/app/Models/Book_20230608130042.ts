@@ -41,6 +41,8 @@ export default class Book extends BaseModel {
   public updatedAt: DateTime
 
   // Relationships ---------------------------------------
+  @hasMany(() => Category)
+  public categories: HasMany<typeof Category>
 
   @manyToMany(() => Category, {
     pivotTable: 'book_category',

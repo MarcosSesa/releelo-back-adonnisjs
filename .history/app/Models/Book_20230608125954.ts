@@ -41,11 +41,13 @@ export default class Book extends BaseModel {
   public updatedAt: DateTime
 
   // Relationships ---------------------------------------
+  @hasMany(() => Category)
+  public routes: HasMany<typeof Category>
 
   @manyToMany(() => Category, {
     pivotTable: 'book_category',
   })
-  public categoriesBook: ManyToMany<typeof Category>
+  public categories: ManyToMany<typeof Category>
 
   @belongsTo(() => User)
   public owner: BelongsTo<typeof User>
