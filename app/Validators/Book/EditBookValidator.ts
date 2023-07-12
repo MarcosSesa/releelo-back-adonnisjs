@@ -1,8 +1,7 @@
-import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export default class EditBookValidator {
-  constructor(private ctx: HttpContextContract) {}
+  constructor() {}
 
   public schema = schema.create({
     title: schema.string({}, [rules.maxLength(50)]),

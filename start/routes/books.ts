@@ -11,3 +11,5 @@ Route.group(() => {
 Route.group(() => {
   Route.get('books', 'BooksController.userBooks')
 }).prefix('user')
+
+Route.post('file-upload', 'BooksController.handleFileUploads')

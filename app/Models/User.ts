@@ -13,11 +13,14 @@ export default class User extends BaseModel {
   @column()
   public username: string
 
-  @hasMany(() => Book)
-  public books: HasMany<typeof Book>
-
   @column({ serializeAs: null })
   public password: string
+
+  @column()
+  public city: string
+
+  @column()
+  public age: number
 
   @column()
   public rememberMeToken: string | null
@@ -27,6 +30,11 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  /*Relations ----------------------------------------------------------------------------------------------------*/
+
+  @hasMany(() => Book)
+  public books: HasMany<typeof Book>
 
   @beforeSave()
   public static async hashPassword(user: User) {

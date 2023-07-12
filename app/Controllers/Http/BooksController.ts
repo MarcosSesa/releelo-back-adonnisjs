@@ -2,12 +2,18 @@
 
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Book from 'App/Models/Book'
-import Category from 'App/Models/Category'
 import CreateBookValidator from 'App/Validators/Book/CreateBookValidator'
 import EditBookValidator from 'App/Validators/Book/EditBookValidator'
+import ImageValidator from 'App/Validators/ImageValidator'
+import Application from '@ioc:Adonis/Core/Application'
 
 export default class BooksController {
-  //Create  a new Book
+  /**
+   * Create a new book.
+   *
+   * @param {HttpContextContract} ctx - The context object.
+   * @returns {Promise<void>}
+   */
   public async create({ request, response, auth }: HttpContextContract) {
     const user = await auth.authenticate()
     const data = await request.validate(CreateBookValidator)
@@ -18,13 +24,24 @@ export default class BooksController {
     //TODO: Add category asignation to the book
   }
 
-  //Get all related books of a user
+  /**
+   * Get all related books of a user.
+   *
+   * @param {HttpContextContract} ctx - The context object.
+   * @returns {Promise<void>}
+   */
   public async userBooks({ response, auth }: HttpContextContract) {
     const user = await auth.authenticate()
     const books = await user.related('books').query()
     return response.created(books)
   }
-  // Get a list of all book
+
+  /**
+   * Get a list of all books.
+   *
+   * @param {HttpContextContract} ctx - The context object.
+   * @returns {Promise<void>}
+   */
   public async getAll({ request, response }: HttpContextContract) {
     //TODO: ADD FILTERS by filter, by category
     const page = request.input('page', 1)
@@ -32,13 +49,25 @@ export default class BooksController {
     const books = await Book.query().paginate(page, rpp)
     return response.ok(books)
   }
-  // Get an specific Book
+
+  /**
+   * Get a specific book.
+   *
+   * @param {HttpContextContract} ctx - The context object.
+   * @returns {Promise<void>}
+   */
   public async index({ request, response }: HttpContextContract) {
     const id = request.input('id')
     const book = await Book.query().where('id', id)
     return response.ok(book)
   }
-  //Deletes one book
+
+  /**
+   * Delete a book.
+   *
+   * @param {HttpContextContract} ctx - The context object.
+   * @returns {Promise<void>}
+   */
   public async delete({ request, response, bouncer, auth }: HttpContextContract) {
     await auth.authenticate()
     const book = await Book.findOrFail(request.input('id'))
@@ -46,7 +75,13 @@ export default class BooksController {
     await book.delete()
     response.ok('Libro borrado correctamnete')
   }
-  //Update specific Book qith the passed info
+
+  /**
+   * Update a specific book.
+   *
+   * @param {HttpContextContract} ctx - The context object.
+   * @returns {Promise<void>}
+   */
   public async update({ bouncer, auth, request, response }: HttpContextContract) {
     await auth.authenticate()
     const data = await request.validate(EditBookValidator)
@@ -54,5 +89,19 @@ export default class BooksController {
     await bouncer.authorize('editBook', book)
     const updatedBook = await book.merge(data).save()
     response.ok(updatedBook)
+  }
+
+  /**
+   * Handle file uploads.
+   *
+   * @param {HttpContextContract} ctx - The context object.
+   * @returns {Promise<void>}
+   */
+  public async handleFileUploads({ request, response }: HttpContextContract) {
+    const data = await request.validate(ImageValidator)
+    await data.image.move(Application.tmpPath('profile-images'))
+    response.created({
+      message: 'Image uploaded',
+    })
   }
 }

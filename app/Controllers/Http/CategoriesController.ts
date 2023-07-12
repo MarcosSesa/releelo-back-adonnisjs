@@ -1,6 +1,5 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-import { Response } from '@adonisjs/core/build/standalone'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Category from 'App/Models/Category'
 import CreateCategoryValidator from 'App/Validators/Book/CreateCategoryValidator'
